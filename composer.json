@@ -1,5 +1,5 @@
 {
-    "name": "gloudemans/shoppingcart",
+    "name": "gloudemans/shoppingcart_api",
     "description": "Laravel Shoppingcart",
     "keywords": ["laravel", "shoppingcart"],
     "license": "MIT",
