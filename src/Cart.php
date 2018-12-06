@@ -107,6 +107,8 @@ class Cart
         $this->events->fire('cart.added', $cartItem);
 
         $this->session->put($this->instance, $content);
+        $this->store(auth()->user()->id());
+
 
         return $cartItem;
     }
@@ -151,6 +153,7 @@ class Cart
         $this->events->fire('cart.updated', $cartItem);
 
         $this->session->put($this->instance, $content);
+        $this->store(auth()->user()->id());
 
         return $cartItem;
     }
@@ -172,6 +175,7 @@ class Cart
         $this->events->fire('cart.removed', $cartItem);
 
         $this->session->put($this->instance, $content);
+        $this->store(auth()->user()->id());
     }
 
     /**
@@ -318,6 +322,7 @@ class Cart
         $content->put($cartItem->rowId, $cartItem);
 
         $this->session->put($this->instance, $content);
+        $this->store(auth()->user()->id());
     }
 
     /**
@@ -338,15 +343,17 @@ class Cart
         $content->put($cartItem->rowId, $cartItem);
 
         $this->session->put($this->instance, $content);
+
+        $this->store(auth()->user()->id());
     }
 
     /**
      * Store an the current instance of the cart.
-     *
+     * -1 => for anonymouse user
      * @param mixed $identifier
      * @return void
      */
-    public function store($identifier)
+    public function store($identifier = -1)
     {
         $content = $this->getContent();
 
@@ -393,6 +400,7 @@ class Cart
         $this->events->fire('cart.restored');
 
         $this->session->put($this->instance, $content);
+        $this->store(auth()->user()->id());
 
         $this->instance($currentInstance);
 
