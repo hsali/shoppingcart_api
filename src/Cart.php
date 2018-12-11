@@ -11,6 +11,7 @@ use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Gloudemans\Shoppingcart\Exceptions\UnknownModelException;
 use Gloudemans\Shoppingcart\Exceptions\InvalidRowIDException;
 use Gloudemans\Shoppingcart\Exceptions\CartAlreadyStoredException;
+use Illuminate\Support\Facades\Auth;
 
 class Cart
 {
@@ -25,7 +26,7 @@ class Cart
 
     /**
      * Instance of the event dispatcher.
-     * 
+     *
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
     private $events;
@@ -103,11 +104,11 @@ class Cart
         }
 
         $content->put($cartItem->rowId, $cartItem);
-        
+
         $this->events->fire('cart.added', $cartItem);
 
         $this->session->put($this->instance, $content);
-        $this->store(auth()->user()->id());
+        $this->store(Auth::user()->id);
 
 
         return $cartItem;
@@ -153,7 +154,7 @@ class Cart
         $this->events->fire('cart.updated', $cartItem);
 
         $this->session->put($this->instance, $content);
-        $this->store(auth()->user()->id());
+        $this->store();
 
         return $cartItem;
     }
@@ -175,7 +176,7 @@ class Cart
         $this->events->fire('cart.removed', $cartItem);
 
         $this->session->put($this->instance, $content);
-        $this->store(auth()->user()->id());
+        $this->store();
     }
 
     /**
@@ -209,7 +210,7 @@ class Cart
      *
      * @return \Illuminate\Support\Collection
      */
-    public function content()
+    public function content($identifier = -1)
     {
         if (is_null($this->session->get($this->instance))) {
             return new Collection([]);
@@ -322,7 +323,7 @@ class Cart
         $content->put($cartItem->rowId, $cartItem);
 
         $this->session->put($this->instance, $content);
-        $this->store(auth()->user()->id());
+        $this->store();
     }
 
     /**
@@ -344,7 +345,7 @@ class Cart
 
         $this->session->put($this->instance, $content);
 
-        $this->store(auth()->user()->id());
+        $this->store();
     }
 
     /**
@@ -400,7 +401,7 @@ class Cart
         $this->events->fire('cart.restored');
 
         $this->session->put($this->instance, $content);
-        $this->store(auth()->user()->id());
+        $this->store();
 
         $this->instance($currentInstance);
 
