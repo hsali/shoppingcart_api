@@ -1,16 +1,16 @@
 <?php
 
-namespace Gloudemans\Shoppingcart;
+namespace Redsignal\Shoppingcart;
 
 use Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Session\SessionManager;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Events\Dispatcher;
-use Gloudemans\Shoppingcart\Contracts\Buyable;
-use Gloudemans\Shoppingcart\Exceptions\UnknownModelException;
-use Gloudemans\Shoppingcart\Exceptions\InvalidRowIDException;
-use Gloudemans\Shoppingcart\Exceptions\CartAlreadyStoredException;
+use Redsignal\Shoppingcart\Contracts\Buyable;
+use Redsignal\Shoppingcart\Exceptions\UnknownModelException;
+use Redsignal\Shoppingcart\Exceptions\InvalidRowIDException;
+use Redsignal\Shoppingcart\Exceptions\CartAlreadyStoredException;
 use Illuminate\Support\Facades\Auth;
 
 class Cart
@@ -58,7 +58,7 @@ class Cart
      * Set the current cart instance.
      *
      * @param string|null $instance
-     * @return \Gloudemans\Shoppingcart\Cart
+     * @return \Redsignal\Shoppingcart\Cart
      */
     public function instance($instance = null)
     {
@@ -87,7 +87,7 @@ class Cart
      * @param int|float $qty
      * @param float     $price
      * @param array     $options
-     * @return \Gloudemans\Shoppingcart\CartItem
+     * @return \Redsignal\Shoppingcart\CartItem
      */
     public function add($id, $name = null, $qty = null, $price = null, array $options = [])
     {
@@ -121,7 +121,7 @@ class Cart
      *
      * @param string $rowId
      * @param mixed  $qty
-     * @return \Gloudemans\Shoppingcart\CartItem
+     * @return \Redsignal\Shoppingcart\CartItem
      */
     public function update($rowId, $qty)
     {
@@ -187,7 +187,7 @@ class Cart
      * Get a cart item from the cart by its rowId.
      *
      * @param string $rowId
-     * @return \Gloudemans\Shoppingcart\CartItem
+     * @return \Redsignal\Shoppingcart\CartItem
      */
     public function get($rowId)
     {
@@ -458,7 +458,7 @@ class Cart
      * @param int|float $qty
      * @param float     $price
      * @param array     $options
-     * @return \Gloudemans\Shoppingcart\CartItem
+     * @return \Redsignal\Shoppingcart\CartItem
      */
     private function createCartItem($id, $name, $qty, $price, array $options)
     {

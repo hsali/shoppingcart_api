@@ -27,25 +27,24 @@
     },
     "autoload": {
         "psr-4": {
-            "Gloudemans\\Shoppingcart\\": "src/"
+            "Redsignal\\Shoppingcart\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Gloudemans\\Tests\\Shoppingcart\\": "tests/"
+            "RedSignal\\Tests\\Shoppingcart\\": "tests/"
         }
     },
     "suggest": {
-        "gloudemans/notify": "Simple flash notifications for Laravel"
     },
     "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [
-                "Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider"
+                "RedSignal\\Shoppingcart\\ShoppingcartServiceProvider"
             ],
             "aliases": {
-                "Cartapi": "Gloudemans\\Shoppingcart\\Facades\\Cart"
+                "Cartapi": "RedSignal\\Shoppingcart\\Facades\\Cart"
             }
         }
     }
