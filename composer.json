@@ -32,7 +32,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "RedSignal\\Tests\\Shoppingcart\\": "tests/"
+            "Redsignal\\Tests\\Shoppingcart\\": "tests/"
         }
     },
     "suggest": {
@@ -41,10 +41,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "RedSignal\\Shoppingcart\\ShoppingcartServiceProvider"
+                "Redsignal\\Shoppingcart\\ShoppingcartServiceProvider"
             ],
             "aliases": {
-                "Cartapi": "RedSignal\\Shoppingcart\\Facades\\Cart"
+                "Cartapi": "Redsignal\\Shoppingcart\\Facades\\Cart"
             }
         }
     }
