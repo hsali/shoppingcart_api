@@ -17,6 +17,8 @@ class Cart
 {
     const DEFAULT_INSTANCE = 'default';
 
+    private $content = "";
+
     /**
      * Instance of the session manager.
      *
@@ -105,9 +107,9 @@ class Cart
 
         $content->put($cartItem->rowId, $cartItem);
 
-        $this->events->fire('cart.added', $cartItem);
+        $this->content = $content;
 
-        $this->session->put($this->instance, $content);
+        $this->events->fire('cart.added', $cartItem);
         $this->store(Auth::user()->id);
 
 
@@ -359,19 +361,22 @@ class Cart
      * @param mixed $identifier
      * @return void
      */
-    public function store($identifier = -1)
+    private function store($identifier = -1)
     {
-        $content = $this->getContent();
 
         if ($this->storedCartWithIdentifierExists($identifier)) {
-            throw new CartAlreadyStoredException("A cart with identifier {$identifier} was already stored.");
+            $this->getConnection()->table($this->getTableName())
+                ->where(['identifier' => $identifier])
+                ->update(['content' => serialize($this->content)]);
+        } else{
+            $this->getConnection()->table($this->getTableName())->insert([
+                'identifier' => $identifier,
+                'instance' => $this->currentInstance(),
+                'content' => serialize($this->content)
+            ]);
         }
 
-        $this->getConnection()->table($this->getTableName())->insert([
-            'identifier' => $identifier,
-            'instance' => $this->currentInstance(),
-            'content' => serialize($content)
-        ]);
+
 
         $this->events->fire('cart.stored');
     }
