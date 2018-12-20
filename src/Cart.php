@@ -3,15 +3,14 @@
 namespace Redsignal\Shoppingcart;
 
 use Closure;
-use Illuminate\Support\Collection;
-use Illuminate\Session\SessionManager;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Events\Dispatcher;
-use Redsignal\Shoppingcart\Contracts\Buyable;
-use Redsignal\Shoppingcart\Exceptions\UnknownModelException;
-use Redsignal\Shoppingcart\Exceptions\InvalidRowIDException;
-use Redsignal\Shoppingcart\Exceptions\CartAlreadyStoredException;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Session\SessionManager;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Redsignal\Shoppingcart\Contracts\Buyable;
+use Redsignal\Shoppingcart\Exceptions\InvalidRowIDException;
+use Redsignal\Shoppingcart\Exceptions\UnknownModelException;
 
 class Cart
 {
@@ -438,7 +437,9 @@ class Cart
 
         $stored = $this->getConnection()->table($this->getTableName())
             ->where('identifier', $identifier)->first();
-
+        if(is_null($stored)){
+            return new Collection;
+        }
         $storedContent = unserialize($stored->content);
 
         $content = new Collection;
