@@ -155,8 +155,8 @@ class Cart
 
         $this->events->fire('cart.updated', $cartItem);
 
-        $this->session->put($this->instance, $content);
-        $this->store();
+        $this->content = $content;
+        $this->store(Auth::user()->id);
 
         return $cartItem;
     }
@@ -177,8 +177,10 @@ class Cart
 
         $this->events->fire('cart.removed', $cartItem);
 
-        $this->session->put($this->instance, $content);
-        $this->store();
+        $this->content = $content;
+
+        $this->store(Auth::user()->id);
+        return ;
     }
 
     /**
@@ -329,8 +331,8 @@ class Cart
 
         $content->put($cartItem->rowId, $cartItem);
 
-        $this->session->put($this->instance, $content);
-        $this->store();
+        $this->content = $content;
+        $this->store(Auth::user()->id);
     }
 
     /**
@@ -350,9 +352,9 @@ class Cart
 
         $content->put($cartItem->rowId, $cartItem);
 
-        $this->session->put($this->instance, $content);
+        $this->content = $content;
 
-        $this->store();
+        $this->store(Auth::user()->id);
     }
 
     /**
@@ -377,47 +379,29 @@ class Cart
         }
 
 
-
         $this->events->fire('cart.stored');
     }
 
     /**
-     * Restore the cart with the given identifier.
+     * Get cart and delete from database with the given identifier.
      *
      * @param mixed $identifier
      * @return void
      */
     public function restore($identifier)
     {
-
-        if( ! $this->storedCartWithIdentifierExists($identifier)) {
-            return;
-        }
-
-        $stored = $this->getConnection()->table($this->getTableName())
-            ->where('identifier', $identifier)->first();
-
-        $storedContent = unserialize($stored->content);
-
-        $currentInstance = $this->currentInstance();
-
-        $this->instance($stored->instance);
-
         $content = $this->getContent();
 
-        foreach ($storedContent as $cartItem) {
-            $content->put($cartItem->rowId, $cartItem);
-        }
+        $this->content = $content;
 
-        $this->events->fire('cart.restored');
-
-        $this->session->put($this->instance, $content);
-        $this->store();
-
-        $this->instance($currentInstance);
+        $this->store(Auth::user()->id);
 
         $this->getConnection()->table($this->getTableName())
             ->where('identifier', $identifier)->delete();
+
+        $this->events->fire('cart.restored');
+
+        return $content;
     }
 
     /**
