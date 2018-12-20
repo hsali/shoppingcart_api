@@ -202,7 +202,9 @@ class Cart
      */
     public function destroy()
     {
-        $this->session->remove($this->instance);
+
+        $this->getConnection()->table($this->getTableName())
+            ->where(['identifier', Auth::user()->id,'instance'=>self::DEFAULT_INSTANCE])->delete();
     }
 
     /**
@@ -210,14 +212,17 @@ class Cart
      *
      * @return \Illuminate\Support\Collection
      */
-    public function content($identifier = -1)
+    public function content()
     {
-        if (is_null($this->session->get($this->instance))) {
+
+        if (is_null($this->getContent())) {
             return new Collection([]);
         }
 
-        return $this->session->get($this->instance);
+        return $this->getContent();
     }
+
+
 
     /**
      * Get the number of items in the cart.
@@ -379,6 +384,7 @@ class Cart
      */
     public function restore($identifier)
     {
+
         if( ! $this->storedCartWithIdentifierExists($identifier)) {
             return;
         }
@@ -439,9 +445,18 @@ class Cart
      */
     protected function getContent()
     {
-        $content = $this->session->has($this->instance)
-            ? $this->session->get($this->instance)
-            : new Collection;
+        $identifier = Auth::user()->id;
+
+        $stored = $this->getConnection()->table($this->getTableName())
+            ->where('identifier', $identifier)->first();
+
+        $storedContent = unserialize($stored->content);
+
+        $content = new Collection;
+
+        foreach ($storedContent as $cartItem) {
+            $content->put($cartItem->rowId, $cartItem);
+        }
 
         return $content;
     }
