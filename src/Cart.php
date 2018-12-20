@@ -363,7 +363,7 @@ class Cart
      * @param mixed $identifier
      * @return void
      */
-    private function store($identifier = -1)
+    public function store($identifier = -1)
     {
 
         if ($this->storedCartWithIdentifierExists($identifier)) {
