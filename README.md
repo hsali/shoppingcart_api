@@ -11,9 +11,18 @@ A simple shoppingcart implementation for Laravel.
 
 Install the package through [Composer](http://getcomposer.org/). 
 
+add these below lines in composer.json
+
+    "repositories" : [
+         {
+             "type": "vcs",
+             "url": "https://bitbucket.org/hsali_rs/cartapi"
+         }
+     ]
+     
 Run the Composer require command from the Terminal:
 
-    composer require gloudemans/shoppingcart
+    composer require hsali/shoppingcart_api
     
 If you're using Laravel 5.5, this is all there is to do. 
 
