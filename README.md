@@ -1,9 +1,7 @@
 ## shoppingcart_api based on gloudemans/shoppingcart package
-[![Build Status](https://travis-ci.org/Crinsane/LaravelShoppingcart.png?branch=master)](https://travis-ci.org/Crinsane/LaravelShoppingcart)
-[![Total Downloads](https://poser.pugx.org/gloudemans/shoppingcart/downloads.png)](https://packagist.org/packages/gloudemans/shoppingcart)
-[![Latest Stable Version](https://poser.pugx.org/gloudemans/shoppingcart/v/stable)](https://packagist.org/packages/gloudemans/shoppingcart)
-[![Latest Unstable Version](https://poser.pugx.org/gloudemans/shoppingcart/v/unstable)](https://packagist.org/packages/gloudemans/shoppingcart)
-[![License](https://poser.pugx.org/gloudemans/shoppingcart/license)](https://packagist.org/packages/gloudemans/shoppingcart)
+[![Latest Stable Version](https://poser.pugx.org/hsali/shoppingcart_api/v/stable)](https://travis-ci.org/hsali/shoppingcart_api)
+[![Latest Stable Version](https://poser.pugx.org/hsali/shoppingcart_api/v/stable)](https://packagist.org/packages/hsali/shoppingcart_api)
+[![License](https://poser.pugx.org/hsali/shoppingcart_api/license)](https://packagist.org/packages/hsali/shoppingcart_api)
 
 A simple shoppingcart implementation for Laravel.
 
@@ -146,86 +144,86 @@ Cart::get($rowId);
 Of course you also want to get the carts content. This is where you'll use the `content` method. This method will return a Collection of CartItems which you can iterate over and show the content to your customers.
 
 ```php
-Cart::content();
+Cartapi::content();
 ```
 
 This method will return the content of the current cart instance, if you want the content of another instance, simply chain the calls.
 
 ```php
-Cart::instance('wishlist')->content();
+Cartapi::instance('wishlist')->content();
 ```
 
-### Cart::destroy()
+### Cartapi::destroy()
 
 If you want to completely remove the content of a cart, you can call the destroy method on the cart. This will remove all CartItems from the cart for the current cart instance.
 
 ```php
-Cart::destroy();
+Cartapi::destroy();
 ```
 
-### Cart::total()
+### Cartapi::total()
 
 The `total()` method can be used to get the calculated total of all items in the cart, given there price and quantity.
 
 ```php
-Cart::total();
+Cartapi::total();
 ```
 
 The method will automatically format the result, which you can tweak using the three optional parameters
 
 ```php
-Cart::total($decimals, $decimalSeperator, $thousandSeperator);
+Cartapi::total($decimals, $decimalSeperator, $thousandSeperator);
 ```
 
 You can set the default number format in the config file.
 
 **If you're not using the Facade, but use dependency injection in your (for instance) Controller, you can also simply get the total property `$cart->total`**
 
-### Cart::tax()
+### Cartapi::tax()
 
 The `tax()` method can be used to get the calculated amount of tax for all items in the cart, given there price and quantity.
 
 ```php
-Cart::tax();
+Cartapi::tax();
 ```
 
 The method will automatically format the result, which you can tweak using the three optional parameters
 
 ```php
-Cart::tax($decimals, $decimalSeperator, $thousandSeperator);
+Cartapi::tax($decimals, $decimalSeperator, $thousandSeperator);
 ```
 
 You can set the default number format in the config file.
 
 **If you're not using the Facade, but use dependency injection in your (for instance) Controller, you can also simply get the tax property `$cart->tax`**
 
-### Cart::subtotal()
+### Cartapi::subtotal()
 
 The `subtotal()` method can be used to get the total of all items in the cart, minus the total amount of tax. 
 
 ```php
-Cart::subtotal();
+Cartapi::subtotal();
 ```
 
 The method will automatically format the result, which you can tweak using the three optional parameters
 
 ```php
-Cart::subtotal($decimals, $decimalSeperator, $thousandSeperator);
+Cartapi::subtotal($decimals, $decimalSeperator, $thousandSeperator);
 ```
 
 You can set the default number format in the config file.
 
 **If you're not using the Facade, but use dependency injection in your (for instance) Controller, you can also simply get the subtotal property `$cart->subtotal`**
 
-### Cart::count()
+### Cartapi::count()
 
 If you want to know how many items there are in your cart, you can use the `count()` method. This method will return the total number of items in the cart. So if you've added 2 books and 1 shirt, it will return 3 items.
 
 ```php
-Cart::count();
+Cartapi::count();
 ```
 
-### Cart::search()
+### Cartapi::search()
 
 To find an item in the cart, you can use the `search()` method.
 
@@ -254,45 +252,45 @@ On multiple instances the Cart will return to you a Collection. This is just a s
 As an example, you can quicky get the number of unique products in a cart:
 
 ```php
-Cart::content()->count();
+Cartapi::content()->count();
 ```
 
 Or you can group the content by the id of the products:
 
 ```php
-Cart::content()->groupBy('id');
+Cartapi::content()->groupBy('id');
 ```
 
 ## Instances
 
 The packages supports multiple instances of the cart. The way this works is like this:
 
-You can set the current instance of the cart by calling `Cart::instance('newInstance')`. From this moment, the active instance of the cart will be `newInstance`, so when you add, remove or get the content of the cart, you're work with the `newInstance` instance of the cart.
-If you want to switch instances, you just call `Cart::instance('otherInstance')` again, and you're working with the `otherInstance` again.
+You can set the current instance of the cart by calling `Cartapi::instance('newInstance')`. From this moment, the active instance of the cart will be `newInstance`, so when you add, remove or get the content of the cart, you're work with the `newInstance` instance of the cart.
+If you want to switch instances, you just call `Cartapi::instance('otherInstance')` again, and you're working with the `otherInstance` again.
 
 So a little example:
 
 ```php
-Cart::instance('shopping')->add('192ao12', 'Product 1', 1, 9.99);
+Cartapi::instance('shopping')->add('192ao12', 'Product 1', 1, 9.99);
 
 // Get the content of the 'shopping' cart
-Cart::content();
+Cartapi::content();
 
-Cart::instance('wishlist')->add('sdjk922', 'Product 2', 1, 19.95, ['size' => 'medium']);
+Cartapi::instance('wishlist')->add('sdjk922', 'Product 2', 1, 19.95, ['size' => 'medium']);
 
 // Get the content of the 'wishlist' cart
-Cart::content();
+Cartapi::content();
 
 // If you want to get the content of the 'shopping' cart again
-Cart::instance('shopping')->content();
+Cartapi::instance('shopping')->content();
 
 // And the count of the 'wishlist' cart again
-Cart::instance('wishlist')->count();
+Cartapi::instance('wishlist')->count();
 ```
 
 **N.B. Keep in mind that the cart stays in the last set instance for as long as you don't set a different one during script execution.**
 
-**N.B.2 The default cart instance is called `default`, so when you're not using instances,`Cart::content();` is the same as `Cart::instance('default')->content()`.**
+**N.B.2 The default cart instance is called `default`, so when you're not using instances,`Cartapi::content();` is the same as `Cartapi::instance('default')->content()`.**
 
 ## Models
 
@@ -309,19 +307,19 @@ Here is an example:
 ```php
 
 // First we'll add the item to the cart.
-$cartItem = Cart::add('293ad', 'Product 1', 1, 9.99, ['size' => 'large']);
+$cartItem = Cartapi::add('293ad', 'Product 1', 1, 9.99, ['size' => 'large']);
 
 // Next we associate a model with the item.
-Cart::associate($cartItem->rowId, 'Product');
+Cartapi::associate($cartItem->rowId, 'Product');
 
 // Or even easier, call the associate method on the CartItem!
 $cartItem->associate('Product');
 
 // You can even make it a one-liner
-Cart::add('293ad', 'Product 1', 1, 9.99, ['size' => 'large'])->associate('Product');
+Cartapi::add('293ad', 'Product 1', 1, 9.99, ['size' => 'large'])->associate('Product');
 
 // Now, when iterating over the content of the cart, you can access the model.
-foreach(Cart::content() as $row) {
+foreach(Cartapi::content() as $row) {
 	echo 'You have ' . $row->qty . ' items of ' . $row->model->name . ' with description: "' . $row->model->description . '" in your cart.';
 }
 ```
@@ -349,18 +347,18 @@ This will place a `shoppingcart` table's migration file into `database/migration
 ### Storing the cart    
 To store your cart instance into the database, you have to call the `store($identifier) ` method. Where `$identifier` is a random key, for instance the id or username of the user.
 
-    Cart::store('username');
+    Cartapi::store('username');
     
     // To store a cart instance named 'wishlist'
-    Cart::instance('wishlist')->store('username');
+    Cartapi::instance('wishlist')->store('username');
 
 ### Restoring the cart
 If you want to retrieve the cart from the database and restore it, all you have to do is call the  `restore($identifier)` where `$identifier` is the key you specified for the `store` method.
  
-    Cart::restore('username');
+    Cartapi::restore('username');
     
     // To restore a cart instance named 'wishlist'
-    Cart::instance('wishlist')->restore('username');
+    Cartapi::instance('wishlist')->restore('username');
 
 ## Exceptions
 
@@ -391,8 +389,8 @@ Below is a little example of how to list the cart content in a table:
 ```php
 
 // Add some items in your Controller.
-Cart::add('192ao12', 'Product 1', 1, 9.99);
-Cart::add('1239ad0', 'Product 2', 2, 5.95, ['size' => 'large']);
+Cartapi::add('192ao12', 'Product 1', 1, 9.99);
+Cartapi::add('1239ad0', 'Product 2', 2, 5.95, ['size' => 'large']);
 
 // Display the content in a View.
 <table>
@@ -407,7 +405,7 @@ Cart::add('1239ad0', 'Product 2', 2, 5.95, ['size' => 'large']);
 
    	<tbody>
 
-   		<?php foreach(Cart::content() as $row) :?>
+   		<?php foreach(Cartapi::content() as $row) :?>
 
        		<tr>
            		<td>
@@ -427,17 +425,17 @@ Cart::add('1239ad0', 'Product 2', 2, 5.95, ['size' => 'large']);
    		<tr>
    			<td colspan="2">&nbsp;</td>
    			<td>Subtotal</td>
-   			<td><?php echo Cart::subtotal(); ?></td>
+   			<td><?php echo Cartapi::subtotal(); ?></td>
    		</tr>
    		<tr>
    			<td colspan="2">&nbsp;</td>
    			<td>Tax</td>
-   			<td><?php echo Cart::tax(); ?></td>
+   			<td><?php echo Cartapi::tax(); ?></td>
    		</tr>
    		<tr>
    			<td colspan="2">&nbsp;</td>
    			<td>Total</td>
-   			<td><?php echo Cart::total(); ?></td>
+   			<td><?php echo Cartapi::total(); ?></td>
    		</tr>
    	</tfoot>
 </table>
