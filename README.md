@@ -3,7 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/hsali/shoppingcart_api/v/stable)](https://packagist.org/packages/hsali/shoppingcart_api)
 [![License](https://poser.pugx.org/hsali/shoppingcart_api/license)](https://packagist.org/packages/hsali/shoppingcart_api)
 
-A simple shoppingcart implementation for Laravel.
+A simple shoppingcart implementation for Laravel for restful application and tested on passport
 
 ## Installation
 
