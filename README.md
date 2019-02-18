@@ -1,4 +1,4 @@
-## LaravelCartApi based on gloudemans/shoppingcart package
+## shoppingcart_api based on gloudemans/shoppingcart package
 [![Build Status](https://travis-ci.org/Crinsane/LaravelShoppingcart.png?branch=master)](https://travis-ci.org/Crinsane/LaravelShoppingcart)
 [![Total Downloads](https://poser.pugx.org/gloudemans/shoppingcart/downloads.png)](https://packagist.org/packages/gloudemans/shoppingcart)
 [![Latest Stable Version](https://poser.pugx.org/gloudemans/shoppingcart/v/stable)](https://packagist.org/packages/gloudemans/shoppingcart)
@@ -10,15 +10,6 @@ A simple shoppingcart implementation for Laravel.
 ## Installation
 
 Install the package through [Composer](http://getcomposer.org/). 
-
-add these below lines in composer.json
-
-    "repositories" : [
-         {
-             "type": "vcs",
-             "url": "https://bitbucket.org/hsali_rs/cartapi"
-         }
-     ]
      
 Run the Composer require command from the Terminal:
 
@@ -30,11 +21,11 @@ Should you still be on version 5.4 of Laravel, the final steps for you are to ad
 
 Add a new line to the `providers` array:
 
-	Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
+	Redsignal\Shoppingcart\ShoppingcartServiceProvider::class
 
 And optionally add a new line to the `aliases` array:
 
-	'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+	'Cartapi' => Redsignal\Shoppingcart\Facades\Cart::class,
 
 Now you're ready to start using the shoppingcart in your application.
 
